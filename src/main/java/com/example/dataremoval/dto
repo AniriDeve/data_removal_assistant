@@ -1,0 +1,11 @@
+package com.example.dataremoval.dto;
+
+public class RemovalRequestDto {
+
+    private String fullName;
+    private String email;
+    private String company;
+    private String dataLink;
+
+    // getters/setters
+}
