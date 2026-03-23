@@ -1,0 +1,40 @@
+package com.example.dataremoval.service;
+
+import com.example.dataremoval.dto.RemovalRequestDto;
+import com.example.dataremoval.generator.EmailGenerator;
+import com.example.dataremoval.model.RemovalRequest;
+import com.example.dataremoval.repository.RemovalRequestRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class RemovalRequestService {
+
+    private final RemovalRequestRepository repository;
+
+    public RemovalRequestService(RemovalRequestRepository repository) {
+        this.repository = repository;
+    }
+
+    public String generateMessage(RemovalRequestDto dto) {
+        return EmailGenerator.generate(dto);
+    }
+
+    public RemovalRequest save(RemovalRequestDto dto) {
+        RemovalRequest request = new RemovalRequest();
+        request.setFullName(dto.getFullName());
+        request.setEmail(dto.getEmail());
+        request.setCompany(dto.getCompany());
+        request.setDataLink(dto.getDataLink());
+        request.setMessage(generateMessage(dto));
+        request.setCreatedAt(LocalDateTime.now());
+
+        return repository.save(request);
+    }
+
+    public List<RemovalRequest> getAll() {
+        return repository.findAll();
+    }
+}
