@@ -1,0 +1,7 @@
+package com.example.dataremoval.repository;
+
+import com.example.dataremoval.model.RemovalRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RemovalRequestRepository extends JpaRepository<RemovalRequest, Long> {
+}
