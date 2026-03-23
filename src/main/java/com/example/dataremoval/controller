@@ -1,0 +1,34 @@
+package com.example.dataremoval.controller;
+
+import com.example.dataremoval.dto.RemovalRequestDto;
+import com.example.dataremoval.model.RemovalRequest;
+import com.example.dataremoval.service.RemovalRequestService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/requests")
+public class RemovalRequestController {
+
+    private final RemovalRequestService service;
+
+    public RemovalRequestController(RemovalRequestService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/generate")
+    public String generate(@RequestBody RemovalRequestDto dto) {
+        return service.generateMessage(dto);
+    }
+
+    @PostMapping
+    public RemovalRequest create(@RequestBody RemovalRequestDto dto) {
+        return service.save(dto);
+    }
+
+    @GetMapping
+    public List<RemovalRequest> getAll() {
+        return service.getAll();
+    }
+}
