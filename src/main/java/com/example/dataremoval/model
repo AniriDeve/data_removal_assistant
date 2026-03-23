@@ -1,0 +1,49 @@
+package com.example.dataremovalassistant.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "removal_requests")
+@Getter
+@Setter
+public class RemovalRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // ФИО пользователя
+    @NotBlank(message = "ФИО не должно быть пустым")
+    private String fullName;
+
+    // Email для ответа
+    @Email(message = "Некорректный email")
+    @NotBlank(message = "Email обязателен")
+    private String email;
+
+    // Ссылка на ресурс, где есть данные
+    @NotBlank(message = "Ссылка обязательна")
+    private String dataSourceUrl;
+
+    // Причина удаления
+    private String reason;
+
+    // Дата создания заявки
+    private LocalDateTime createdAt;
+
+    // Статус заявки
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.status = RequestStatus.NEW;
+    }
+}
