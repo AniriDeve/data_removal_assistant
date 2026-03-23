@@ -1,0 +1,24 @@
+package com.example.dataremoval.generator;
+
+import com.example.dataremoval.dto.RemovalRequestDto;
+
+public class EmailGenerator {
+
+    public static String generate(RemovalRequestDto dto) {
+        return """
+        Тема: Запрос на удаление персональных данных
+
+        Здравствуйте.
+
+        В соответствии с законодательством РФ (ФЗ-152), прошу удалить мои персональные данные, размещенные на вашем ресурсе:
+
+        %s
+
+        Прошу подтвердить удаление данных в установленный законом срок.
+
+        С уважением,
+        %s
+        %s
+        """.formatted(dto.getDataLink(), dto.getFullName(), dto.getEmail());
+    }
+}
